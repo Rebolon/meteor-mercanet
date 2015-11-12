@@ -4,12 +4,16 @@ Template.bankSelect.onCreated(function() {
 
 Template.bankSelect.helpers({
   "getBankSelect": () => {
-    return Template.instance().cards.get();
+    // to prevent Spacebar to crash an error because of empty string
+    if (!Template.instance().cards.get()) return;
+
+    let html = Spacebars.SafeString(Template.instance().cards.get());
+    return html;
   }
 });
 
 Template.bankSelect.events({
-  "click button": () => {
+  "click button": (ev, tpl) => {
     let promise = new Promise( (resolve, reject) => {
       Meteor.call("mercanet-list-cards", (err, res) => {
         if (err) {
@@ -22,7 +26,7 @@ Template.bankSelect.events({
 
     promise
       .then( result => {
-        Template.instance().cards.set(result);
+        tpl.cards.set(result);
       })
       .catch( error => {
         console.error(error);

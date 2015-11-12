@@ -23,7 +23,12 @@ Meteor.methods({
       "amount": 100,
       "currency_code": 978,
       "pathfile": Meteor.settings.pathfile_path
-    }, args = [];
+    }, 
+      args = [],
+      message,
+      results,
+      code,
+      error;
 
     _.each(_.keys(params), function(key) {
       args.push(key + "=" + params[key]);
@@ -34,18 +39,18 @@ Meteor.methods({
     const execFileSync = Meteor.wrapAsync(process.execFile);
 
     try {
-      let results = execFileSync(binary, args);
-      let resultList = results.split('!');
-      let code = resultList[1];
-      let error = resultList[2];
-      let message = resultList[3];
-console.log(resultList);
+      results = execFileSync(binary, args);
+      resultList = results.split('!');
+      code = resultList[1];
+      error = resultList[2];
+      message = resultList[3];
+
       if (code == "" && error == "") throw new Meteor.Error('request call error: request binary not found');
-      if (code != "0") throw new Meteor.Error('Payment API error: ' + error);
+      if (code != "0") throw new Meteor.Error(`Payment API error: ${ error }`);
 
     } catch (e) {
       console.warn(e);
-      let message = "<form method='post'><button onclick='javascript: FlowRouter.go(\"home\");'></form>";
+      message = "<form method='post'><button onclick='javascript: FlowRouter.go(\"home\");'></form>";
     }
 
     return message;
