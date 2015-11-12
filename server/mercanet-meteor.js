@@ -9,7 +9,8 @@ Meteor.startup(() => {
   });
 
   if (errors.length) {
-    throw new Meteor.Error("Fill the settings file, missing params: ", erros.join(", "));
+    let message = errors.join(", ");
+    throw new Meteor.Error(`Fill the settings file, missing params: ${ message }`);
   }
 });
 
