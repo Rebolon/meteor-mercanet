@@ -1,12 +1,16 @@
 var postRoutes = Picker.filter(function(req, res) {
   return req.method == "POST";
-}), bodyParser = Npm.require("rebolon:middleware_bodyparser");
+});
 
-postRoutes.use(bodyParser.urlencoded({ extended: false }))
+postRoutes.middleware(MiddlewareBodyParser.urlencoded({ extended: false }));
+postRoutes.middleware(MiddlewareBodyParser.raw({}));
 
-postRoutes.route('/comebackhome/', function(params, req, res, next) {
+postRoutes.route('/orderpayed/', function(params, req, res, next) {
+  Meteor.call('mercanet-response', req.body.DATA)
+  res.end();
+});
 
-  console.log(_.keys(req));
-
-  res.end(post.content);
+postRoutes.route('/ordercancelled/', function(params, req, res, next) {
+  Meteor.call('mercanet-response', req.body.DATA)
+  res.end();
 });
