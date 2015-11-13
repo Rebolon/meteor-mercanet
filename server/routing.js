@@ -17,7 +17,7 @@ postRoutes.route('/orderpayed/', function(params, req, res, next) {
 
   // then you redirect the user
   res.writeHead(303, {
-    'Location': 'http://51.254.223.11:3000/cool'
+    'Location': 'http://51.254.223.11:3000/bank/paid/1'
   });
   res.end();
 });
