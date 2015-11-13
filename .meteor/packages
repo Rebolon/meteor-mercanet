@@ -23,3 +23,5 @@ reactive-var
 meteortoys:allthings
 kadira:flow-router
 meteorhacks:picker
+
+rebolon:middleware-bodyparser
