@@ -21,3 +21,5 @@ insecure                # Allow all DB writes from clients (for prototyping)
 underscore
 reactive-var
 meteortoys:allthings
+kadira:flow-router
+meteorhacks:picker
