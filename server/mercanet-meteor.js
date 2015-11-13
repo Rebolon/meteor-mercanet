@@ -41,13 +41,13 @@ const execFileSync = Meteor.wrapAsync(process.execFile);
 Meteor.methods({
   "mercanet-list-cards": () => {
     // call_request.php
-    let args = _.extend({
+    let args = params, /*_.extend({
         "transaction_id": (new Date()).getTime(),// is it enough ? tid should be uniq... so the order._id
         "order_id": "",
         "customer_id": "",
         "return_context": {}.stringify(),
         "data": {}.stringify()
-      }, params),
+      }, params),*/
       message,
       results,
       resultList,

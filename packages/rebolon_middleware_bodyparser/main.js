@@ -1,1 +1,1 @@
-MiddlewareBodyParser = Meteor.require( 'body-parser');
+MiddlewareBodyParser = Npm.require( 'body-parser');
