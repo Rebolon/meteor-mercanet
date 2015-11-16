@@ -3,33 +3,24 @@ Template.bankSelect.onCreated(function() {
 });
 
 Template.bankSelect.helpers({
-  "getBankSelect": () => {
+  "getBankSelect": function() {
     // to prevent Spacebar to crash an error because of empty string
     if (!Template.instance().cards.get()) return;
 
-    let html = Spacebars.SafeString(Template.instance().cards.get());
+    var html = Spacebars.SafeString(Template.instance().cards.get());
     return html;
   }
 });
 
 Template.bankSelect.events({
-  "click button": (ev, tpl) => {
-    let promise = new Promise( (resolve, reject) => {
-      Meteor.call("mercanet-list-cards", (err, res) => {
+  "click button": function (ev, tpl) {
+      Meteor.call("mercanet-list-cards", function (err, res) {
         if (err) {
-          reject(err);
+          console.error(err);
+          return;
         } else {
-          resolve(res);
+          tpl.cards.set(res);
         }
-      });
-    });
-
-    promise
-      .then( result => {
-        tpl.cards.set(result);
-      })
-      .catch( error => {
-        console.error(error);
       });
   }
 });
