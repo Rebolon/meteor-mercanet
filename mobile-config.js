@@ -13,7 +13,7 @@ App.icons({
 });
 
 App.launchScreens({
-  'android_ldpi_portrait': 'splash/Default~android.jpg',
+  'android_ldpi_portrait': 'splash/Default~android.png',
   // ... more screen sizes and platforms ...
 });
 
