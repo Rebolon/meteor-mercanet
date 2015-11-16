@@ -9,11 +9,11 @@ app.info({
 
 // Set up resources such as icons and launch screens.
 App.icons({
-  'android_ldpi': 'icons/icon-60.png',
+  'android_ldpi': 'public/icons/icon-60.png',
 });
 
 App.launchScreens({
-  'android_ldpi_portrait': 'splash/Default~android.png',
+  'android_ldpi_portrait': 'public/splash/Default~android.png',
   // ... more screen sizes and platforms ...
 });
 
