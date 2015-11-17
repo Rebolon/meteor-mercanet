@@ -17,6 +17,7 @@ Template.bankSelect.events({
       Meteor.call("mercanet-list-cards", function (err, res) {
         if (err) {
           console.error(err);
+          $('#error').html(err.message);
           return;
         } else {
           tpl.cards.set(res);

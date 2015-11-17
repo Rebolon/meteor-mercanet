@@ -1,4 +1,4 @@
-app.info({
+App.info({
   id: 'com.ddv.benjamin.richard',
   name: 'MeteorJS',
   description: 'mercanet proof of concept over meteorjs',
