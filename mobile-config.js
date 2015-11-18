@@ -1,4 +1,4 @@
-app.info({
+App.info({
   id: 'com.ddv.benjamin.richard',
   name: 'MeteorJS',
   description: 'mercanet proof of concept over meteorjs',
@@ -7,13 +7,15 @@ app.info({
   website: 'http://peaks.fr'
 });
 
+App.accessRule('*');
+
 // Set up resources such as icons and launch screens.
 App.icons({
-  'android_ldpi': 'icons/icon-60.png',
+  'android_ldpi': 'public/icons/icon-60.png',
 });
 
 App.launchScreens({
-  'android_ldpi_portrait': 'splash/Default~android.png',
+  'android_ldpi_portrait': 'public/splash/Default~android.png',
   // ... more screen sizes and platforms ...
 });
 
