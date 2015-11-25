@@ -23,7 +23,6 @@ App.launchScreens({
 App.setPreference('BackgroundColor', '0xff0000ff');
 App.setPreference('HideKeyboardFormAccessoryBar', true);
 App.setPreference('Orientation', 'default');
-App.setPreference('Orientation', 'all', 'android');
 
 // Pass preferences for a particular PhoneGap/Cordova plugin
 
