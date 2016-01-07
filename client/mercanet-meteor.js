@@ -47,7 +47,7 @@ Template.bankSelect.events({
       })
       .catch( error => {
         console.error(error);
-		$('#error').html(`Catch error: ${error.message}`);
+        $('#error').html(`Catch error: ${error.message}`);
       });
   }
 });
