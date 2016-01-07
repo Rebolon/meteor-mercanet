@@ -1,4 +1,4 @@
-app.info({
+App.info({
   id: 'com.ddv.benjamin.richard',
   name: 'MeteorJS',
   description: 'mercanet proof of concept over meteorjs',
@@ -7,13 +7,15 @@ app.info({
   website: 'http://peaks.fr'
 });
 
+App.accessRule('*');
+
 // Set up resources such as icons and launch screens.
 App.icons({
-  'android_ldpi': 'icons/icon-60.gif',
+  'android_ldpi': 'public/icons/icon-60.png',
 });
 
 App.launchScreens({
-  'android': 'splash/Default~android.jpg',
+  'android_ldpi_portrait': 'public/splash/Default~android.png',
   // ... more screen sizes and platforms ...
 });
 
@@ -21,7 +23,6 @@ App.launchScreens({
 App.setPreference('BackgroundColor', '0xff0000ff');
 App.setPreference('HideKeyboardFormAccessoryBar', true);
 App.setPreference('Orientation', 'default');
-App.setPreference('Orientation', 'all', 'android');
 
 // Pass preferences for a particular PhoneGap/Cordova plugin
 
