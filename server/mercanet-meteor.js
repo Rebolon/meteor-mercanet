@@ -40,6 +40,7 @@ const execFileSync = Meteor.wrapAsync(process.execFile);
 
 Meteor.methods({
   "mercanet-list-cards": () => {
+console.log('mercanet-list-cards');
     // call_request.php
     let args = params, /*_.extend({
         "transaction_id": (new Date()).getTime(),// is it enough ? tid should be uniq... so the order._id

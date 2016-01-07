@@ -30,6 +30,7 @@ Template.bankSelect.events({
       })
       .catch( error => {
         console.error(error);
+        $('#error').html(error.message);
       });
   }
 });
