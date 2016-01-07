@@ -5,7 +5,26 @@
 <body>
   <h1>Mercanet Meteor!</h1>
 
+  <pre>
+      Numéro de carte	    Code réponse
+      123123123123300	    00 : paiement accepté
+      123123123123305	    05 : paiement refusé
+
+      Si cryptograme avec la carte choisi :
+      Cryptogramme	cvv_response_code	Signification
+      100       	4D              	Numéro de contrôle correct
+      140       	4D              	Numéro de contrôle correct
+      150	        50              	Numéro de contrôle non traité
+      153	        53               	Numéro de contrôle absent de la demande d'autorisation
+      155	        55              	La banque du client n'est pas certifiée, le contrôle n'a pu être effectué
+  </pre>
   {{> bankSelect}}
+  
+  <div id="error">{{getError}}</div>
+
+  <div>{{#with getPayments}}
+  Numéro de commande: {{infos.orderId}}
+  {{/with}}</div>
 </body>
 
 <template name="bankSelect">

@@ -28,9 +28,9 @@ let prepareArgs = (params) => {
     "amount": 100,
     "currency_code": 978,
     "pathfile": Meteor.settings.pathfile_path,
-    "normal_return_url": "http://51.254.223.11:3000/orderpayed",
-    "cancel_return_url": "http://51.254.223.11:3000/ordercancelled",
-    "automatic_response_url": "http://51.254.223.11:3000/orderpayedautoresponse"
+    "normal_return_url": `${Meteor.settings.server_uri}/orderpayed`,
+    "cancel_return_url": `${Meteor.settings.server_uri}/ordercancelled`,
+    "automatic_response_url": `${Meteor.settings.server_uri}/orderpayedautoresponse`
 };
 
 const binary_request = Meteor.settings.bin_request_path;
@@ -40,14 +40,17 @@ const execFileSync = Meteor.wrapAsync(process.execFile);
 
 Meteor.methods({
   "mercanet-list-cards": () => {
+console.log('mercanet-list-cards');
     // call_request.php
-    let args = params, /*_.extend({
-        "transaction_id": (new Date()).getTime(),// is it enough ? tid should be uniq... so the order._id
-        "order_id": "",
-        "customer_id": "",
-        "return_context": {}.stringify(),
-        "data": {}.stringify()
-      }, params),*/
+    let orderId = (new Mongo.ObjectID())._str,
+	customerId = (new Mongo.ObjectID())._str,
+        args = /*params,*/_.extend({
+//        "transaction_id": (new Date()).getTime(),// it is not enough so we also need an order_id and a cusomer_id, both are the main key of the transaction. Transaction_id should be an autoincrement concat with the YYYYMMDD to get something uniq per day
+        "data": JSON.stringify({
+          "order_id": orderId,
+          "customer_id": customerId
+        })
+      }, params),
       message,
       results,
       resultList,
@@ -55,7 +58,7 @@ Meteor.methods({
       error;
 
     let preparedArgs = prepareArgs(args);
-
+console.log(preparedArgs);
     try {
       results = execFileSync(binary_request, preparedArgs);
       resultList = results.split('!');
@@ -102,7 +105,23 @@ console.log("infos", infos);
       console.warn(e);
     }
 
-    return infos;
+    if (!infos[29]) {
+      let errMsg = "Payment unwished transaction, missing index 29 with contextual data";
+      console.error(errMsg);
+      throw new Meteor.Error(errMsg);
+    }
+
+    let context = JSON.parse(infos[29]),
+        payment = Payments.findOne({"context.orderId": context.orderId, "context.customerId": context.customerId}),
+        id;
+
+    if (!payment) {
+      id = Payments.insert(_.extend({response: {error: error, code: code, data: data}, infos: infos, context: context}));
+    } else {
+      id = payment._id;
+    }
+
+    return id;
   }
 });
 

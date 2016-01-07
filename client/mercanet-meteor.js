@@ -1,5 +1,13 @@
 Template.bankSelect.onCreated(function() {
   this.cards = new ReactiveVar();
+  this.paymentsId = new ReactiveVar();
+
+  Tracker.autorun(() => {
+    FlowRouter.watchPathChange();
+    var currentContext = FlowRouter.current();
+    this.paymentsId = currentContext.params.paymentsId;
+    console.log(currentContext.params.paymentsId, this.paymentsId);
+  });
 });
 
 Template.bankSelect.helpers({
@@ -9,6 +17,15 @@ Template.bankSelect.helpers({
 
     let html = Spacebars.SafeString(Template.instance().cards.get());
     return html;
+  },
+  "getError": () => {
+    return Template.instance().cards.get();
+  },
+  "getPayments": () => {
+console.log("getPayments", Template.instance().paymentsId.get());
+
+    if (!Template.instance().paymentsId.get()) return;
+    return Payments.findOne({"_id": Template.instance().paymentsId.get()});
   }
 });
 
@@ -30,6 +47,7 @@ Template.bankSelect.events({
       })
       .catch( error => {
         console.error(error);
+		$('#error').html(`Catch error: ${error.message}`);
       });
   }
 });
